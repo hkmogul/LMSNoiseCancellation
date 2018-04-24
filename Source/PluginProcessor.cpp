@@ -17,9 +17,9 @@ LmsnoiseCancellationAudioProcessor::LmsnoiseCancellationAudioProcessor()
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  AudioChannelSet::stereo(), true)
+                       .withInput  ("Input",  AudioChannelSet::mono(), true)
                       #endif
-                       .withOutput ("Output", AudioChannelSet::stereo(), true)
+                       .withOutput ("Output", AudioChannelSet::mono(), true)
                      #endif
                        )
 #endif

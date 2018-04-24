@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="LMSNoiseCancellation" projectType="audioplug" buildStandalone="1"
-              jucerVersion="5.3.1" pluginFormats="buildStandalone">
+              jucerVersion="5.3.1" pluginFormats="buildStandalone,buildVST"
+              buildVST="1" buildVST3="0" buildAU="0" buildAUv3="0" buildRTAS="0"
+              buildAAX="0" enableIAA="0">
   <MAINGROUP id="ubXuRr" name="LMSNoiseCancellation">
     <GROUP id="{1F843BC2-7AEF-1184-AF00-F7F8C98C3F82}" name="Source">
+      <FILE id="vGoRHM" name="DelayLine.cpp" compile="1" resource="0" file="Source/DelayLine.cpp"/>
+      <FILE id="VwFmqS" name="DelayLine.h" compile="0" resource="0" file="Source/DelayLine.h"/>
+      <FILE id="XVGTr7" name="LMSFilter.cpp" compile="1" resource="0" file="Source/LMSFilter.cpp"/>
+      <FILE id="raLOVb" name="LMSFilter.h" compile="0" resource="0" file="Source/LMSFilter.h"/>
       <FILE id="k7iDdZ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="jlgDdy" name="PluginProcessor.h" compile="0" resource="0"
