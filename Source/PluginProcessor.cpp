@@ -24,6 +24,7 @@ LmsnoiseCancellationAudioProcessor::LmsnoiseCancellationAudioProcessor()
                        )
 #endif
 {
+	
 }
 
 LmsnoiseCancellationAudioProcessor::~LmsnoiseCancellationAudioProcessor()
@@ -97,6 +98,7 @@ void LmsnoiseCancellationAudioProcessor::prepareToPlay (double sampleRate, int s
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+	lmsFilter.prepare((int)sampleRate, samplesPerBlock);
 }
 
 void LmsnoiseCancellationAudioProcessor::releaseResources()
@@ -153,7 +155,10 @@ void LmsnoiseCancellationAudioProcessor::processBlock (AudioBuffer<float>& buffe
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-
+		for (int i = 0; i < buffer.getNumSamples(); ++i)
+		{
+			channelData[i] = lmsFilter.processSample(channelData[i]);
+		}
         // ..do something to the data...
     }
 }

@@ -5,7 +5,7 @@
 class LMSFilter
 {
 public:
-	LMSFilter(int filtOrd, int delayLen, float m, int samplingRate, int samplesPerBlock);
+	LMSFilter(int filtOrd = 30, int delayLen = 20, float m = 0.001f, int samplingRate = 44100, int samplesPerBlock = 480);
 	float processSample(float x);
 	void prepare(int samplingRate, int samplesPerBlockExpected);
 
