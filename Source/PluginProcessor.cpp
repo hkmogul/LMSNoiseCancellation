@@ -159,7 +159,6 @@ void LmsnoiseCancellationAudioProcessor::processBlock (AudioBuffer<float>& buffe
 		{
 			channelData[i] = lmsFilter.processSample(channelData[i]);
 		}
-        // ..do something to the data...
     }
 }
 

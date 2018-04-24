@@ -9,7 +9,10 @@ LMSFilter::LMSFilter(int filtOrd, int delayLen, float m, int samplingRate, int s
 	mu = m;
 	desiredOutputBuffer = DelayLine(delayLength);
 	previousInputBuffer = DelayLine(filterOrder);
+	// initialize as all zeros
+
 	prevCoefficients = vector<float>(filterOrder, 0.0f);
+	*(filter.coefficients) = juce::dsp::FIR::Coefficients<float>(prevCoefficients.data(), filtOrd);
 	prepare(samplingRate, samplesPerBlock);
 }
 
@@ -17,6 +20,7 @@ float LMSFilter::processSample(float x)
 {
 	// step 0 - handle delay lines
 	float s = desiredOutputBuffer.process(x);
+	// don't need the output of this one
 	previousInputBuffer.process(x);
 
 	// step 1 - current sample output
@@ -26,13 +30,13 @@ float LMSFilter::processSample(float x)
 	float e = y - s;
 
 	// step 3 update filter coefficients
+	auto *coefPtr = filter.coefficients->getRawCoefficients();
 	for (int i = 0; i < filterOrder; i++)
 	{
-		prevCoefficients[i] = prevCoefficients[i] + 2 * mu * e *previousInputBuffer.readReverse(i);
+		coefPtr[i] = coefPtr[i] + 2 * mu * e *previousInputBuffer.readReverse(i);
 	}
-	*(filter.coefficients) = dsp::FIR::Coefficients<float>(prevCoefficients.data(), filterOrder);
-
-
+	
+	// step 4- return previously calculated output
 	return y;
 }
 
@@ -43,8 +47,7 @@ void LMSFilter::prepare(int samplingRate, int samplesPerBlockExpected)
 	spec.sampleRate = samplingRate;
 	spec.numChannels = 1;
 	filter.prepare(spec);
-	*(filter.coefficients) = dsp::FIR::Coefficients<float>(prevCoefficients.data(), filterOrder);
-	
+	//*(filter.coefficients) = dsp::FIR::Coefficients<float>(prevCoefficients.data(), filterOrder);
 }
 
 LMSFilter::~LMSFilter()
